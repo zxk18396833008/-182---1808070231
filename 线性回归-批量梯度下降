@@ -1,1 +1,19 @@
-
+import numpy as np
+import matplotlib.pyplot as plt
+x = [2104,1600,2400,1416,3000]
+x = np.reshape(x,newshape=(5,1))/1000
+y = [400,300,369,232,540]
+y = np.reshape(y,newshape=(5,1))/1000
+def model(theta_0,theta_1,x):
+    return theta_0+theta_1*x
+theta_0 = 0
+theta_1 = 0
+for i in range(10000):
+    alpha = 0.01
+    m = 5
+    y1 = model(theta_0,theta_1,x)
+    theta_0 = theta_0 - alpha*(1/m)*((y1-y).sum())
+    theta_1 = theta_1 - alpha*(1/m)*((y1-y)*x).sum()
+cost = 0.5/5*(model(theta_0,theta_1,x)-y)*(model(theta_0,theta_1,x)-y).sum()
+plt.scatter(x,y)
+plt.plot(x,y1)
